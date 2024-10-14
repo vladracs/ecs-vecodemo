@@ -40,7 +40,7 @@ stringData:
             <LocalAccounts>
               <LocalAccount>
                 <Password>
-                  <Value>EncryptedPasswordHere</Value>
+                  <Value>MyPasswordHere</Value>
                   <PlainText>false</PlainText>
                 </Password>
                 <Description>User for automatic login</Description>
