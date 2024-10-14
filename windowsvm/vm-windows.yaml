@@ -41,7 +41,7 @@ stringData:
               <LocalAccount>
                 <Password>
                   <Value>MyPasswordHere</Value>
-                  <PlainText>false</PlainText>
+                  <PlainText>true</PlainText>
                 </Password>
                 <Description>User for automatic login</Description>
                 <DisplayName>NewUser</DisplayName>
