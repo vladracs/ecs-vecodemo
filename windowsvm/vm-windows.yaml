@@ -1,0 +1,67 @@
+apiVersion: vmoperator.vmware.com/v1alpha1
+kind: VirtualMachine
+metadata:
+  name: windows-11
+  namespace: default
+  annotations:
+    vmoperator.vmware.com/image-supported-check: disable
+    #vmoperator.vmware.com/cloudinit-type: cloudinitprep
+spec:
+  className: best-effort-small
+  imageName: 192.168.0.10:9000/tinywin.ova
+  powerState: poweredOn
+  vmMetadata:
+    secretName: sysprep-bootstrap-data
+    transport: Sysprep
+  networkInterfaces:
+  - networkName: "VM Network"
+    ethernetCardType: "vmxnet3"
+  - networkName: "VM Network"
+    ethernetCardType: "e1000"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sysprep-bootstrap-data
+  namespace: default
+stringData:
+  unattend: |
+    <?xml version="1.0" encoding="utf-8"?>
+    <unattend xmlns="urn:schemas-microsoft-com:unattend">
+      <settings pass="specialize">
+        <!-- Other specialize settings here -->
+      </settings>
+
+      <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+          
+          <!-- Create a local user -->
+          <UserAccounts>
+            <LocalAccounts>
+              <LocalAccount>
+                <Password>
+                  <Value>EncryptedPasswordHere</Value>
+                  <PlainText>false</PlainText>
+                </Password>
+                <Description>User for automatic login</Description>
+                <DisplayName>NewUser</DisplayName>
+                <Group>Administrators</Group>  <!-- Add user to Administrators group -->
+                <Name>NewUser</Name>
+              </LocalAccount>
+            </LocalAccounts>
+          </UserAccounts>
+
+          <!-- Automatically log in with the new user -->
+          <AutoLogon>
+            <Password>
+              <Value>MyPasswordHere</Value>
+              <PlainText>true</PlainText>
+            </Password>
+            <Enabled>true</Enabled>
+            <LogonCount>1</LogonCount>
+            <Username>NewUser</Username>
+          </AutoLogon>
+
+
+      </settings>
+    </unattend>
