@@ -2,12 +2,12 @@
 apiVersion: vmoperator.vmware.com/v1alpha1
 kind: VirtualMachine
 metadata:
-  name: photon-vm
+  name: ubuntu-vm
   namespace: default
   annotations:
     vmoperator.vmware.com/image-supported-check: disable
 spec:
-  className: guaranteed-small
+  className: best-effor-small
   #please don't include http/https prefix in the address. 
   #We will detect it automatically and also to make it compatible with container image naming spec)
   imageName: 192.168.0.16:9000/ubuntu-2204.ova
@@ -16,13 +16,13 @@ spec:
   - networkName: "VM Network"
     ethernetCardType: "vmxnet3"
   vmMetadata:
-    configMapName: user-data-photon
+    configMapName: user-data
     transport: CloudInit
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: user-data-photon
+    name: user-data
     namespace: default
 data:
   user-data: |
