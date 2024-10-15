@@ -11,7 +11,7 @@ spec:
   #please don't include http/https prefix in the address. 
   #We will detect it automatically and also to make it compatible with container image naming spec)
   imageName: 192.168.0.16:9000/ubuntu-2204.ova
-  powerState: poweredOn
+  powerState: poweredDown
   networkInterfaces:
   - networkName: "VM Network"
     ethernetCardType: "vmxnet3"
